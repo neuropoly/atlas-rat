@@ -1,0 +1,149 @@
+
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171207_rat_Minos_3/mosaic
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic41.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic33.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic11.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic22.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic40.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic32.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic10.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic21.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic39.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic31.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic9.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic20.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic8.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic38.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic30.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic19.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic7.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic37.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic29.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic18.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic6.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic36.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic28.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic17.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic5.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic35.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic27.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic16.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic4.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic34.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic26.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic15.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic3.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic47.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic25.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic14.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic2.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic46.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic24.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic1.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic13.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic23.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic45.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic12.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic52.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic55.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic44.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic51.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic58.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic54.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic43.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic50.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic57.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic53.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic42.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic49.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic56.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic60.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic62.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic64.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic48.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic59.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic61.png
+/Volumes/histology/rat/20171207_rat_Minos_3/mosaic63.png
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171207_rat_Minos_3/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171207_rat_Minos_5/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171207_rat_Minos_6/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171208_rat_Minos_7/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171208_rat_Minos_8/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171208_rat_Minos_9/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171208_rat_Minos_4/mosaic
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic17.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic18.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic19.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic20.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic21.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic22.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic23.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic24.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic25.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic26.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic27.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic28.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic29.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic30.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic31.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic32.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic33.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic34.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic35.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic36.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic37.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic38.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic39.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic40.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic41.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic42.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic43.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic44.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic45.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic46.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic47.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic48.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic49.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic50.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic51.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic52.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic53.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic54.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic55.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic56.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic57.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic58.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic59.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic60.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic61.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic62.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic63.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic64.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic65.png
+/Volumes/histology/rat/20171208_rat_Minos_4/mosaic66.png
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171211_rat_Minos_10/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171208_rat_Minos_4/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171211_rat_Minos_10/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171212_rat_Minos_11/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171212_rat_Minos_12/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171212_rat_Minos_13/mosaic
+/Volumes/histology/rat/20171212_rat_Minos_13/mosaic1.png
+/Volumes/histology/rat/20171212_rat_Minos_13/mosaic7.png
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171212_rat_Minos_14/mosaic
+STARTING SEGMENTATION!
+Processing Folder /Volumes/histology/rat/20171220_rat_Minos_21/mosaic

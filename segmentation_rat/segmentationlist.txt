@@ -1,0 +1,14 @@
+1 /Volumes/histology/rat/20171207_rat_Minos_3/mosaic
+1 /Volumes/histology/rat/20171207_rat_Minos_5/mosaic
+1 /Volumes/histology/rat/20171207_rat_Minos_6/mosaic
+1 /Volumes/histology/rat/20171208_rat_Minos_7/mosaic
+1 /Volumes/histology/rat/20171208_rat_Minos_8/mosaic
+1 /Volumes/histology/rat/20171208_rat_Minos_9/mosaic
+1 /Volumes/histology/rat/20171208_rat_Minos_4/mosaic
+1 /Volumes/histology/rat/20171211_rat_Minos_10/mosaic
+1 /Volumes/histology/rat/20171212_rat_Minos_11/mosaic
+1 /Volumes/histology/rat/20171212_rat_Minos_12/mosaic
+1 /Volumes/histology/rat/20171212_rat_Minos_13/mosaic
+1 /Volumes/histology/rat/20171212_rat_Minos_14/mosaic
+2 /Volumes/histology/rat/20171220_rat_Minos_21/mosaic
+0 /Volumes/histology/rat/20171220_rat_Minos_22/mosaic

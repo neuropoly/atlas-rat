@@ -37,8 +37,12 @@ for level=1:length(LIST_LEVELS)
     % change color of right tracts
     atlas(end/2:end,:,:) = atlas(end/2:end,:,:)-1;
 
-    % set tract values
-    tract_values = 1:16;
+    if level== 1 || level==2 || level==3
+        % set tract values
+        tract_values = 1:16;
+    else
+        tract_values = 1:14; 
+    end 
 
     % keep largest blob
     atlas_clean = zeros(size(atlas),'uint16');
@@ -57,7 +61,7 @@ for level=1:length(LIST_LEVELS)
     end
 
     %% Load Volume4D (=stats) of concatenated metrics template
-    stats=load_nii_data(fname_metrics); % The 4th dimension contains the metrics values: 1) axondensity, 2) axondiameter, 3) gratio, 4)myelin thickness, 5)MVF
+    stats=load_nii_data(fname_metrics); % The 4th dimension contains the metrics values: 1) axondensity, 2) axondiameter, 3) AVF Corrected, 4)g-ratio, 5)Myelin Thickness 6) MVF Corrected
 
 
     %% Write png of atlas overlayed on first metric image (ie axon density)
@@ -86,12 +90,13 @@ for level=1:length(LIST_LEVELS)
         for is=1:size(stats,4)
             stats_tmp = stats(:,:,:,is);
             val{ii,is} = stats_tmp(ismember(atlas_clean,tract_values(ii)) & stats_tmp>0);
+            save('tract_metrics.mat', 'val');
         end
     end
 
     %% violin plot
-    metrics = {'axon density', 'axon diameter', 'gratio', 'myelin thickness', 'MVF'};
-    contrast = {[0 600],        [0 3],          [.4 0.8],         [0 1],        [0 0.7]};
+    metrics = {'Axon Density', 'Axon Diameter', 'AVF Corrected', 'G Ratio', 'Myelin Thickness', 'MVF Corrected'};
+    contrast = {[0 600],        [0 3],          [0 0.7],         [0.4 0.8],        [0 1],        [0 0.7]};
 
     for im = 1:length(metrics)
         figure
@@ -102,5 +107,14 @@ for level=1:length(LIST_LEVELS)
         ylim(contrast{im})
         export_fig(genvarname(metrics{im}), '-r150')
     end
+    
+    for ii= 1:length(tract_values)
+        for m= 1:length(metrics)
+            x(ii,m)= mean(val{ii,m});
+            save('tract_averages.mat', 'x')
+        end
+    end
+        
+    cd .. 
 end
 

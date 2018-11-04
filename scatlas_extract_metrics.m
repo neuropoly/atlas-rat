@@ -85,7 +85,7 @@ for level=1:length(LIST_LEVELS)
     % get the features for all the tracts
     val=cell(length(tract_values),size(stats,4));
 
-    for ii=1:length(tract_values)
+    for ii=1:2:length(tract_values)
         %sc(atlas_clean==ordertractval(ii)); drawnow; pause
         for is=1:size(stats,4)
             stats_tmp = stats(:,:,:,is);
@@ -97,10 +97,13 @@ for level=1:length(LIST_LEVELS)
     %% violin plot
     metrics = {'Axon Density', 'Axon Diameter', 'AVF Corrected', 'G Ratio', 'Myelin Thickness', 'MVF Corrected'};
     contrast = {[0 600],        [0 3],          [0 0.7],         [0.4 0.8],        [0 1],        [0 0.7]};
+    
+    Pcolors2=Pcolors(1:2:end,:);
 
     for im = 1:length(metrics)
         figure
-        violin(val(~cellfun(@isempty,val(:,im)'),im)','facecolor',Pcolors)
+        violin(val(~cellfun(@isempty,val(:,im)'),im)','facecolor',Pcolors2)
+        grid on
         hold off
         ylabel(metrics{im})
         set(gca,'Xtick',[])
@@ -117,4 +120,3 @@ for level=1:length(LIST_LEVELS)
         
     cd .. 
 end
-

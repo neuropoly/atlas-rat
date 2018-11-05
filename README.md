@@ -181,6 +181,12 @@ scatlas_register_atlas_to_template.m
 
 - **Metrics extraction**: Extract metrics within tracts defined by the atlas. 1) Creates an image showing a metric with an overlay of the atlas, where each tract is shown with a different color. 2) Extracts metrics. 3) Generate violin plot form and stats.
 
+~~~
+scatlas_extract_metrics.m
+~~~
+
+Before running the script, add to path the violin function that can be downloaded here: https://www.mathworks.com/matlabcentral/fileexchange/45134-violin-plot
+
 ![alt tag](./doc/template_fig_git.png)
 
 ADD PIPELINE OVERVIEW FIGURE HERE

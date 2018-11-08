@@ -33,6 +33,7 @@ for level=1:length(LIST_LEVELS)
     filename_atlas_fixed = [level_name,'_reg_reg_tracts_fixed.nii.gz'];
     unix(['fslmaths ' filename_atlas ' -kernel box 0.5x0.5 -fmedian ' filename_atlas_fixed]);
     
+    cd .. 
 end
 
 disp "DONE!"

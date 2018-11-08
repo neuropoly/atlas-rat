@@ -32,33 +32,63 @@ for level=1:length(LIST_LEVELS)
     cd(LIST_LEVELS{level});
     
     %% Make color atlas
-    atlas = uint8(round(load_nii_data([LIST_LEVELS{level},'_reg_reg_tracts_reg.nii.gz'])));
+    atlas = uint8(round(load_nii_data([LIST_LEVELS{level},'_reg_reg_tracts_fixed_reg.nii.gz'])));
     atlas = atlas*2;  % change the dynamic of the color scaling
     % change color of right tracts
     atlas(end/2:end,:,:) = atlas(end/2:end,:,:)-1;
+    
+    atlas_clean = zeros(size(atlas),'uint16');
 
     if level== 1 || level==2 || level==3
         % set tract values
         tract_values = 1:16;
+            % keep largest blob
+        for ii=1:16
+            [labeledImage] = bwlabel(atlas==ii,4);
+            blobMeasurements = regionprops(labeledImage, 'area');
+            % Get all the areas
+            allAreas = [blobMeasurements.Area];
+            [vv,ind] = max([allAreas]);
+            %  ind=find(allAreas>minimalsize & allAreas<size(atlas,1)*size(atlas,2)*.1);
+            % Extract the "numberToExtract" largest blob(a)s using ismember().
+            if ~isempty(ind)
+                tractmask = labeledImage ==ind;
+                atlas_clean = atlas_clean + uint16(tractmask)*ii;
+            end
+        end
+        
     else
         tract_values = 1:14; 
+            % keep largest blob
+        for ii=1:14
+            [labeledImage] = bwlabel(atlas==ii,4);
+            blobMeasurements = regionprops(labeledImage, 'area');
+            % Get all the areas
+            allAreas = [blobMeasurements.Area];
+            [vv,ind] = max([allAreas]);
+            %  ind=find(allAreas>minimalsize & allAreas<size(atlas,1)*size(atlas,2)*.1);
+            % Extract the "numberToExtract" largest blob(a)s using ismember().
+            if ~isempty(ind)
+                tractmask = labeledImage ==ind;
+                atlas_clean = atlas_clean + uint16(tractmask)*ii;
+            end
+        end
     end 
 
-    % keep largest blob
-    atlas_clean = zeros(size(atlas),'uint16');
-    for ii=1:16
-        [labeledImage] = bwlabel(atlas==ii,4);
-        blobMeasurements = regionprops(labeledImage, 'area');
-        % Get all the areas
-        allAreas = [blobMeasurements.Area];
-        [vv,ind] = max([allAreas]);
-        %  ind=find(allAreas>minimalsize & allAreas<size(atlas,1)*size(atlas,2)*.1);
-        % Extract the "numberToExtract" largest blob(a)s using ismember().
-        if ~isempty(ind)
-            tractmask = labeledImage ==ind;
-            atlas_clean = atlas_clean + uint16(tractmask)*ii;
-        end
-    end
+%     % keep largest blob
+%     for ii=1:16
+%         [labeledImage] = bwlabel(atlas==ii,4);
+%         blobMeasurements = regionprops(labeledImage, 'area');
+%         % Get all the areas
+%         allAreas = [blobMeasurements.Area];
+%         [vv,ind] = max([allAreas]);
+%         %  ind=find(allAreas>minimalsize & allAreas<size(atlas,1)*size(atlas,2)*.1);
+%         % Extract the "numberToExtract" largest blob(a)s using ismember().
+%         if ~isempty(ind)
+%             tractmask = labeledImage ==ind;
+%             atlas_clean = atlas_clean + uint16(tractmask)*ii;
+%         end
+%     end
 
     %% Load Volume4D (=stats) of concatenated metrics template
     stats=load_nii_data(fname_metrics); % The 4th dimension contains the metrics values: 1) axondensity, 2) axondiameter, 3) AVF Corrected, 4)g-ratio, 5)Myelin Thickness 6) MVF Corrected
@@ -96,18 +126,24 @@ for level=1:length(LIST_LEVELS)
 
     %% violin plot
     metrics = {'Axon Density', 'Axon Diameter', 'AVF Corrected', 'G Ratio', 'Myelin Thickness', 'MVF Corrected'};
-    contrast = {[0 600],        [0 3],          [0 0.7],         [0.4 0.8],        [0 1],        [0 0.7]};
-    
-    Pcolors2=Pcolors(1:2:end,:);
+    contrast = {[0 600],        [0 2.5],          [0 0.4],         [0.4 0.75],        [0.2 0.75],        [0 0.5]};
 
+        Pcolors2=Pcolors(1:2:end,:);
+
+    
     for im = 1:length(metrics)
         figure
         violin(val(~cellfun(@isempty,val(:,im)'),im)','facecolor',Pcolors2)
-        grid on
         hold off
         ylabel(metrics{im})
-        set(gca,'Xtick',[])
+        set(gca,'Xtick', (1:1:10))
         ylim(contrast{im})
+        ax= gca;
+        ax.XGrid= 'off';
+        ax.YGrid= 'on';
+        xlabel('tracts');
+        xlim([0 10]);
+   
         export_fig(genvarname(metrics{im}), '-r150')
     end
     
@@ -120,3 +156,4 @@ for level=1:length(LIST_LEVELS)
         
     cd .. 
 end
+

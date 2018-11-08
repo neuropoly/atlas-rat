@@ -174,6 +174,8 @@ The step below is optional (labels are already included in the dataset).
 scatlas_create_mirror_image.m
 ~~~
 
+- **scatlas_atlas_fix_tract_interface.m**: In the current implementation of `scatlas_create_mirror_image`, there are issues at tract interfaces, i.e.: the tracts are summed at the interface and/or there are null pixels. This creates subsequent issues in the pipeline. This script fixes that problem by applying a median filter, which effectively removes spurious pixels at interface.
+
 - **Register atlas to template**: (TO COPY WHEN FINALIZED)
 ~~~
 scatlas_register_atlas_to_template.m

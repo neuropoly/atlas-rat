@@ -167,12 +167,14 @@ scatlas_concatenate_all_levels.m
 
 In this example we will use the existing atlas created by Watson et al.: https://www.sciencedirect.com/science/article/pii/B9780123742476500195?via%3Dihub
 
-This atlas is digitized and available at: https://github.com/neuropoly/histology/tree/master/Pipeline/b_rat_Generate_Atlas/digital_watson_paxinos_atlas
+This atlas is digitized and available at: https://github.com/neuropoly/atlas_rat/tree/master/digital_watson_paxinos_atlas
 
 The step below is optional (labels are already included in the dataset).
 ~~~
 scatlas_create_mirror_image.m
 ~~~
+
+- **scatlas_atlas_fix_tract_interface.m**: In the current implementation of `scatlas_create_mirror_image`, there are issues at tract interfaces, i.e.: the tracts are summed at the interface and/or there are null pixels. This creates subsequent issues in the pipeline. This script fixes that problem by applying a median filter, which effectively removes spurious pixels at interface.
 
 - **Register atlas to template**: (TO COPY WHEN FINALIZED)
 ~~~

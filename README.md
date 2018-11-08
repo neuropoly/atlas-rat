@@ -167,7 +167,7 @@ scatlas_concatenate_all_levels.m
 
 In this example we will use the existing atlas created by Watson et al.: https://www.sciencedirect.com/science/article/pii/B9780123742476500195?via%3Dihub
 
-This atlas is digitized and available at: https://github.com/neuropoly/histology/tree/master/Pipeline/b_rat_Generate_Atlas/digital_watson_paxinos_atlas
+This atlas is digitized and available at: https://github.com/neuropoly/atlas_rat/tree/master/digital_watson_paxinos_atlas
 
 The step below is optional (labels are already included in the dataset).
 ~~~

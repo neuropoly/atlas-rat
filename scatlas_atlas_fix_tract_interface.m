@@ -28,12 +28,12 @@ for level=1:length(LIST_LEVELS)
 
     % apply median filter on nifti file
     % parse name
-    [~,level_name] = fileparts(pwd);
-    filename_atlas = [level_name,'_reg_reg_tracts.nii.gz'];
-    filename_atlas_fixed = [level_name,'_reg_reg_tracts_fixed.nii.gz'];
-    unix(['fslmaths ' filename_atlas ' -kernel box 0.5x0.5 -fmedian ' filename_atlas_fixed]);
-    
-    cd .. 
+
+        [~,level_name] = fileparts(pwd);
+        filename_atlas = [level_name,'_reg_reg_tracts.nii.gz'];
+        filename_atlas_fixed = [level_name,'_reg_reg_tracts_fixed.nii.gz'];
+        unix(['fslmaths ' filename_atlas ' -kernel box 0.50x0.50 -fmedian ' filename_atlas_fixed]);
+     cd .. 
 end
 
 disp "DONE!"

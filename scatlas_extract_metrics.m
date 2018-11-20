@@ -1,5 +1,5 @@
 %%-------------------------------------------------------------------------
-% Extract metrics within tracts defined by the atlas.
+% Extract metrics within tracts defined by the atlas. 
 % 
 % 1) Creates an image showing a metric with an overlay of the atlas, where
 % each tract is shown with a different color.
@@ -105,6 +105,10 @@ for level=1:length(LIST_LEVELS)
     for ii=1:length(tract_values)
         atlascolor(atlascolor==tract_values(ii))=ii;
     end
+    
+%     save_nii_v2(atlascolor, 'atlas_color.nii.gz', 'Sample1_AD_reg_Reg.nii.gz', 16);
+%     atlascolor= load_nii_data('atlas_color.nii.gz');
+    
     img = stats(:,:,:,1);
     sc(sc(img,[0,300]) + .3*imresize(sc(ind2rgb(atlascolor,colormap(cat(1,[0 0 0],Pcolors)))),size(img)));
     axis image
@@ -152,8 +156,11 @@ for level=1:length(LIST_LEVELS)
             x(ii,m)= mean(val{ii,m});
             save('tract_averages.mat', 'x')
         end
-    end
-        
+    end  
+     z= load('tract_averages.mat');
+     z=z.x';
+     z= array2table(z);
+     save('tract_averages.mat', 'z')
     cd .. 
 end
 

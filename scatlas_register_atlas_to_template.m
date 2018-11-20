@@ -44,7 +44,12 @@ for level=1:length(LIST_LEVELS)
 %     dest = load_nii_data('dest.nii.gz');
 
     % put atlas in same header as template
-    img_atlas_resized = imresize(img_atlas,[151,151]);
+    if level==6 || level==8 || level==21 || level==22
+        img_atlas_resized = imresize(img_atlas,[151,151]);
+    else
+        img_atlas_resized = imresize(img_atlas,[151,151], 'nearest');
+    end 
+
     filname_atlas_resized = [level_name,'_WM_reg_reg_resized.nii.gz'];
     save_nii_v2(make_nii(img_atlas_resized, [PIXEL_SIZE PIXEL_SIZE 1]), filname_atlas_resized, filename_atlas);
     filename_atlas = filname_atlas_resized;
@@ -133,10 +138,12 @@ for level=1:length(LIST_LEVELS)
     img_tracts = load_nii_data(filename_tracts);
 
     % put tracts in same header as template
-    img_tracts_resized = imresize(img_tracts, [151,151]);
+    img_tracts_resized = imresize(img_tracts, [151,151], 'nearest');
     filename_tracts_resized = [level_name, '_reg_reg_tracts_fixed_resized.nii.gz'];
     save_nii_v2(make_nii(img_tracts_resized, [PIXEL_SIZE PIXEL_SIZE 1]), filename_tracts_resized, filename_tracts);
     filename_tracts = filename_tracts_resized;
+    filename_tracts_fixed = [level_name,'_reg_reg_tracts_resized_fixed.nii.gz'];
+    %unix(['fslmaths ' filename_tracts ' -kernel box 0.15x0.15 -fmedian ' filename_tracts_fixed]);
 
     % Use sct_concat_transfo to create warp with the warp_0GenericAffine.met
     % and the warp output from the ANTS registration
@@ -149,10 +156,18 @@ for level=1:length(LIST_LEVELS)
     save_untouch_nii(warp2,'warp_atlas2template_sym.nii.gz')
     
     % Apply warps onto the tracts mask
-    sct_unix(['sct_apply_transfo -i ', filename_tracts, ...
-        ' -d ', filename_template, ...
-        ' -w warpinit_0GenericAffine.mat,warp_atlas2template_sym.nii.gz', ...
-        ' -o ', [level_name,'_reg_reg_tracts_fixed_reg.nii.gz']]);
+    if level== 28 || level==29 || level==30 || level== 31
+        sct_unix(['sct_apply_transfo -i ', filename_tracts, ...
+            ' -d ', filename_template, ...
+            ' -x nn', ...
+            ' -w warpinit_0GenericAffine.mat,warp_atlas2template_sym.nii.gz', ...
+            ' -o ', [level_name,'_reg_reg_tracts_fixed_reg.nii.gz']]);
+     else
+            sct_unix(['sct_apply_transfo -i ', filename_tracts, ...
+            ' -d ', filename_template, ...
+            ' -w warpinit_0GenericAffine.mat,warp_atlas2template_sym.nii.gz', ...
+            ' -o ', [level_name,'_reg_reg_tracts_fixed_reg.nii.gz']]);
+    end 
     
     % Generate QC
     scatlas_qc_registration({[level_name,'_reg_reg_tracts_fixed_reg.nii.gz'], filename_template}, ['../../qc_atlas_', LIST_LEVELS{level}, '.gif']);

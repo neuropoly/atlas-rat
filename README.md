@@ -74,7 +74,7 @@ data_rat_spinalcord_atlas/
 - open a terminal
 - clone this repository:
 ~~~
-git clone https://github.com/neuropoly/histology.git
+git clone https://github.com/neuropoly/atlas-rat
 ~~~
 - open Matlab
 - add the folder of this repository to the Matlab's dir using `pathtool`

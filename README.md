@@ -6,11 +6,11 @@ The output is a 4D nifti volume containing metrics obtained from scanning electr
 One slice corresponds to one spinal level: C1, C2, ... C8, T1, ...T13, L1, ... L6, S1, ... S4.
 
 The 4th dimension contains the different metrics, in this order:
-- Axon Density
-- Axon Diameter
-- G-Ratio
-- Myelin Thickness
-- Myelin Volume Fraction
+- Axon Density (AD)
+- Axon Equivalent Diameter (AED)
+- G-Ratio (GR)
+- Myelin Thickness (MT)
+- Myelin Volume Fraction (MVF)
 
 ## Dependencies
 
@@ -24,10 +24,9 @@ The dataset that this pipeline is based on is available at: https://osf.io/4b69v
 
 - Rats perfusion + histology
 - Acquisition with EM
-- **Segment axon+myelin**: Using [Axonseg](https://github.com/neuropoly/axonseg). Outputs: Axon diameter, axon density, MVF, AVF, gratio, myelin thickness downsampled at 50 um maps.
+- **Segment axon+myelin**: Using [Axonseg](https://github.com/neuropoly/axonseg). Outputs: Axon density, Axon diameter, g-ratio, myelin thickness and MVF, downsampled at 50 um maps.
 
 The data are organized as follows:
-TODO (Ariane)
 
 ```
 data_rat_spinalcord_atlas/
@@ -81,95 +80,67 @@ data_rat_spinalcord_atlas/
 
 ### Installation
 
-- open a terminal
-- clone this repository:
+- Open a terminal
+- Clone this repository:
 ~~~
 git clone https://github.com/neuropoly/atlas-rat
 ~~~
-- open Matlab
-- add the folder of this repository to the Matlab's dir using `pathtool`
+- Open Matlab
+- Add the folder of this repository to the Matlab's dir using `pathtool` (include subfolders)
 
 ### Generate atlas
 
-- copy the file scatlas_parameters_template.m --> scatlas_parameters.m
-- adjust parameters to your setup:
-~~~
-edit scatlas_parameters.m
-~~~
+- Copy the file scatlas_parameters_template.m --> scatlas_parameters.m
+- Edit `scatlas_parameters.m` and adjust parameters according to your setup.
 
-- **Create white matter masks and output referential image**:
-~~~
-scatlas_create_mask.m
-~~~
+- [scatlas_create_mask.m](./scatlas_create_mask.m): Create white matter masks and output referential image.
 
 Alternative approach (faster, but not used here):
 Use [MIPAV]() > LineWireVOI. Example below:
 
-![alt tag](./doc/mipav.png)
+<img src="./doc/mipav.png" alt="mipav"/>
 
-- **Labeling**: This step is optional (labels are already included in the dataset). From the axon density map (), created labels by running:
-~~~
-scatlas_create_labels.m
-~~~
+- [scatlas_create_labels.m](scatlas_create_labels.m): This step is optional (labels are already included in the dataset). From the axon density map (), created labels by running:
+
 The following labels need to be created:
   - `Label1.mat`: single point in the central canal
 
-![alt tag](./doc/Label1.png)
+  <img src="./doc/Label1.png" alt="Label1" width="400"/>
 
   - `Label2.mat`: single point in the anterior median fissure.
 
-![alt tag](./doc/Label2.png))
+  <img src="./doc/Label2.png" alt="Label2" width="400"/>
 
-- **Transform to common space**: Estimate a 2D rigid transformation in order to put the original(axon density) maps into a common space, centered at Label #1 and oriented such that the line defined by Label #1 and Label #2 is vertical. Apply transformation to axon density map. Loop across subject and levels.
-~~~
-scatlas_transform_to_common_space.m
-~~~
 
-- **Linear bias correction**: Due to the limited spatial resolution, the blurry
+- [scatlas_transform_to_common_space.m](./scatlas_transform_to_common_space.m): Estimate a 2D rigid transformation in order to put the original(axon density) maps into a common space, centered at Label #1 and oriented such that the line defined by Label #1 and Label #2 is vertical. Apply transformation to axon density map. Loop across subject and levels.
+
+- [scatlas_linear_bias_correction.m](./scatlas_linear_bias_correction.m): Due to the limited spatial resolution, the blurry
 appearance of the images induces bias in the estimation of the myelin+axon segmentation.
 Based on high-resolution SEM data, we estimate the bias introduced by the
 automatic axon+myelin segmentation.
-~~~
-scatlas_linear_bias_correction.m
-~~~
 
-- **Apply correction**: Apply the correction factors estimated in the previous
+- [scatlas_apply_correction.m](./scatlas_apply_correction.m): Apply the correction factors estimated in the previous
 step on the MVF, AVF and g-ratio maps.
-~~~
-scatlas_apply_correction.m
-~~~
 
-- **Template generation**: Create average 2D template based on the WM masks, using
+- [scatlas_generate_template.m](./scatlas_generate_template.m): Create average 2D template based on the WM masks, using
  antsmultivariateTemplateConstrusction2.sh. QC figures are generated at the
  root of all level folders (qc_template_*.gif).
-~~~
-scatlas_generate_template.m
-~~~
 
-- **Apply warping**: Apply the rigid transformation + warping fields to all metrics maps and
+- [scatlas_apply_warp.m](./scatlas_apply_warp.m): Apply the rigid transformation + warping fields to all metrics maps and
  generate spatial statistics (mean, STD). Note that the output volume is
  4d in shape, but the 3rd dimension (corresponding to z) is a singleton
  to anticipate future concatenation (done in later scripts).
 Outputs are: `Volume4D.nii.gz` (Mean across samples) and `Volume4D_std.nii.gz`(STD).
-~~~
-scatlas_apply_warp.m
-~~~
 
-- **Symmetrize and clean template**: This script takes the `Volume4D.nii.gz` and `Volume4D_std.nii.gz` files of each level as inputs and (i) uses the
+- [scatlas_symmetrize_and_clean_template.m](./scatlas_symmetrize_and_clean_template.m): This script takes the `Volume4D.nii.gz` and `Volume4D_std.nii.gz` files of each level as inputs and (i) uses the
  left-right flips to symmetrize the output (the average is computed
  between the template and its flipped version); (ii) cleans the template
  by only keeping the spinal cord (i.e. white + gray matter) and removing
  the outer content. Outputs are: `Volume4D_sym_cleaned.nii.gz` and `Volume4D_sym_std_cleaned.nii.gz`
-~~~
-scatlas_symmetrize_and_clean_template.m
-~~~
 
-- **Concatenate across levels**: Concatenates the volumes (x, y, 1, metric) of each level to
+- [scatlas_concatenate_all_levels.m](./scatlas_concatenate_all_levels.m): Concatenates the volumes (x, y, 1, metric) of each level to
  generate a 4D volume that includes all levels (x, y, z, metric). Also generates 3D
  volumes of each metric across all levels.
-~~~
-scatlas_concatenate_all_levels.m
-~~~
 
 ### Register external atlas to the generated template
 

@@ -12,15 +12,12 @@
 
 clear
 
-% parameters
-list_metrics = {'AD', 'AED', 'AVF_corrected', 'GR_corrected', 'MT', 'MVF_corrected'};  % suffix of metrics on which to apply warping field
-
 % load params
 run scatlas_parameters.m
 
 fprintf('==========\nAPPLY WARP\n==========\n')
 
-%% PART 1 - APPLY THE WARPING FIELDS TO THE METRIC MAPS -------------------
+%% PART 1: APPLY THE WARPING FIELDS TO THE METRIC MAPS
 
 % go to data folder
 cd(fullfile(PATH_DATA, FOLDER_LEVELS))
@@ -36,22 +33,22 @@ for i=1:length(LIST_LEVELS)
         cd(char(list_samples(ii)));
 
         % loop across metrics and apply warps
-        for iii=1:length(list_metrics)
+        for iii=1:length(LIST_METRICS)
             % resample metric into template space
-            sct_unix(['sct_register_multimodal -i '  char(list_samples(ii)) '_' char(list_metrics(iii)) '.nii.gz'...
-            ' -o ' char(list_samples(ii)) '_' char(list_metrics(iii)) '_reg.nii.gz  -d ref_template_50um_' char(list_samples(ii)) '.nii.gz -identity 1']);
+            sct_unix(['sct_register_multimodal -i '  char(list_samples(ii)) '_' char(LIST_METRICS(iii)) '.nii.gz'...
+            ' -o ' char(list_samples(ii)) '_' char(LIST_METRICS(iii)) '_reg.nii.gz  -d ref_template_50um_' char(list_samples(ii)) '.nii.gz -identity 1']);
             % Apply the warping fields to the metric
             sct_unix(['isct_antsApplyTransforms -d 2', ...
-                ' -i ', char(list_samples(ii)), '_', char(list_metrics(iii)), ...
+                ' -i ', char(list_samples(ii)), '_', char(LIST_METRICS(iii)), ...
                 '_reg.nii.gz', ' -o ', char(list_samples(ii)), '_', ...
-                char(list_metrics(iii)), '_reg_reg.nii.gz -t', ...
+                char(LIST_METRICS(iii)), '_reg_reg.nii.gz -t', ...
                 ' ../templategen/template/T_', char(list_samples(ii)), '_mask_reg_reg', num2str(ii-1), '1Warp.nii.gz', ...
                 ' ../templategen/template/T_', char(list_samples(ii)), '_mask_reg_reg', num2str(ii-1), '0GenericAffine.mat', ...
                 ' affine_transfo.txt', ...
                 ' -r ref_template_50um_' char(list_samples(ii)) '.nii.gz']);
 
             % copy each final metric map of each sample to the level folder
-            copyfile ([char(list_samples(ii)) '_' char(list_metrics(iii)) '_reg_reg.nii.gz'], ['..']);         
+            copyfile ([char(list_samples(ii)) '_' char(LIST_METRICS(iii)) '_reg_reg.nii.gz'], ['..']);         
         end
         
         cd ..
@@ -60,7 +57,7 @@ for i=1:length(LIST_LEVELS)
 end 
 
 
-%% PART 2 - COMPUTE THE MEAN AND STD RESULTS (TEMPLATE) --------------------
+%% PART 2: COMPUTE THE MEAN AND STD RESULTS (TEMPLATE)
 
 % go to data folder
 cd(fullfile(PATH_DATA, FOLDER_LEVELS))
@@ -71,19 +68,19 @@ for i=1:length(LIST_LEVELS)
     
     % initialize volume that is going to store final metrics maps for
     % each level of the spinal cord
-    name=[char(list_samples(1)) '_' char(list_metrics(1)) '_reg_reg.nii.gz'];
+    name=[char(list_samples(1)) '_' char(LIST_METRICS(1)) '_reg_reg.nii.gz'];
     ref_for_size=load_nii_data(name);  
     
-    Volume4D=zeros(size(ref_for_size,1),size(ref_for_size,2),1,length(list_metrics));
-    Volume4D_std=zeros(size(ref_for_size,1),size(ref_for_size,2),1,length(list_metrics));
+    Volume4D=zeros(size(ref_for_size,1),size(ref_for_size,2),1,length(LIST_METRICS));
+    Volume4D_std=zeros(size(ref_for_size,1),size(ref_for_size,2),1,length(LIST_METRICS));
     
     tmp=zeros(size(ref_for_size,1),size(ref_for_size,2),length(list_samples)/2);
     tmp_mask=ones(size(ref_for_size,1),size(ref_for_size,2),length(list_samples)/2);   
        
     % get maps
-    for mm=1:length(list_metrics)    
+    for mm=1:length(LIST_METRICS)    
         for mmm=1:2:length(list_samples)
-            name=[char(list_samples(mmm)) '_' char(list_metrics(mm)) '_reg_reg.nii.gz'];
+            name=[char(list_samples(mmm)) '_' char(LIST_METRICS(mm)) '_reg_reg.nii.gz'];
             sample_id=(mmm+1)/2;
             tmp(:,:,sample_id)=load_nii_data(name);
         end     
@@ -116,9 +113,9 @@ for i=1:length(LIST_LEVELS)
 
         % concatenate all metrics and compute average template for each
         % metric across samples of the current level
-        for mm=1:length(list_metrics)    
+        for mm=1:length(LIST_METRICS)    
             for mmm=1:2:length(list_samples)
-                name=[char(list_samples(mmm)) '_' char(list_metrics(mm)) '_reg_reg.nii.gz'];
+                name=[char(list_samples(mmm)) '_' char(LIST_METRICS(mm)) '_reg_reg.nii.gz'];
                 sample_id=(mmm+1)/2;
                 tmp(:,:,sample_id)=load_nii_data(name);
             end  
@@ -131,7 +128,7 @@ for i=1:length(LIST_LEVELS)
     end
                 
     % save the final volume of metrics (input for k-means in next step)
-    ref_4d=zeros(size(ref_for_size,1),size(ref_for_size,2),1,length(list_metrics));
+    ref_4d=zeros(size(ref_for_size,1),size(ref_for_size,2),1,length(LIST_METRICS));
     save_nii(make_nii(ref_4d,[0.05 0.05 1]),'Volume4D_ref.nii.gz');
     save_nii_v2(Volume4D,'Volume4D.nii.gz','Volume4D_ref.nii.gz',16);
     save_nii_v2(Volume4D_std,'Volume4D_std.nii.gz','Volume4D_ref.nii.gz',16);
@@ -142,6 +139,20 @@ for i=1:length(LIST_LEVELS)
     % delete 3d ref used to save the final 3d volume
     delete('Volume4D_ref.nii.gz');    
 
+    cd ..
+    
+end
+
+%% PART 3: COPY THE WM MASKS
+
+% go to data folder
+cd(fullfile(PATH_DATA, FOLDER_LEVELS))
+
+for i=1:length(LIST_LEVELS)
+    
+    cd(LIST_LEVELS{i});
+    % copy average WM mask generated during template creation
+    copyfile('templategen/template/T_template0.nii.gz', 'mask_WM.nii.gz');
     cd ..
     
 end

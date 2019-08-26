@@ -1,6 +1,16 @@
 ## Pipeline for generating spinal cord atlas from electron microscopy
 
 This pipeline is designed to generate an atlas of the spinal cord based on electron microscopy images.
+The output is a 4D nifti volume containing metrics obtained from scanning electron microscopy.
+
+One slice corresponds to one spinal level: C1, C2, ... C8, T1, ...T13, L1, ... L6, S1, ... S4.
+
+The 4th dimension contains the different metrics, in this order:
+- Axon Density
+- Axon Diameter
+- G-Ratio
+- Myelin Thickness
+- Myelin Volume Fraction
 
 ## Dependencies
 

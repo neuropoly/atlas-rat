@@ -87,10 +87,5 @@ for level=1:length(LIST_LEVELS)
   
 end
 
-disp "DONE!"
-
-
-
-
-
+fprintf('\nDONE!\n')
     

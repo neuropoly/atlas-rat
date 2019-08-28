@@ -65,27 +65,25 @@ end
 fprintf('\nSave files...');
 ref_4d_full=zeros(size(Volume4D_full,1),size(Volume4D_full,2),size(Volume4D_full,3),size(Volume4D_full,4));
 save_nii(make_nii(ref_4d_full,[0.05 0.05 1]),'Volume4D_full_ref.nii.gz');
-save_nii_v2(Volume4D_full,'Volume4D_full.nii.gz','Volume4D_full_ref.nii.gz',16);
-save_nii_v2(Volume4D_full_std,'Volume4D_full_std.nii.gz','Volume4D_full_ref.nii.gz',16);
-save_nii_v2(mask_cord,'mask_cord.nii.gz','Volume4D_full_ref.nii.gz',2);
-save_nii_v2(mask_wm,'mask_wm.nii.gz','Volume4D_full_ref.nii.gz',2);
+save_nii_v2(Volume4D_full,'AtlasRat_4D_mean.nii.gz','Volume4D_full_ref.nii.gz',16);
+save_nii_v2(Volume4D_full_std,'AtlasRat_4D_std.nii.gz','Volume4D_full_ref.nii.gz',16);
+save_nii_v2(mask_cord,'AtlasRat_mask_cord.nii.gz','Volume4D_full_ref.nii.gz',2);
+save_nii_v2(mask_wm,'AtlasRat_mask_WM.nii.gz','Volume4D_full_ref.nii.gz',2);
 
 % save individual volumes for each metric, across all levels
 ref_metric=zeros(size(Volume4D_full,1),size(Volume4D_full,2),size(Volume4D_full,3));
 save_nii(make_nii(ref_metric,[0.05 0.05 1]),'Template_metric_ref.nii.gz');
 
 for ii=1:size(Volume4D_full,4)
-    tmp=Volume4D_full(:,:,:,ii);
-    Volume_metric=squeeze(tmp);
-    name=['Template_metric_' num2str(ii) '.nii.gz'];
-    save_nii_v2(Volume_metric,name,'Template_metric_ref.nii.gz',16);
+    tmp = Volume4D_full(:,:,:,ii);
+    Volume_metric = squeeze(tmp);  % make it 3D
+    name_out = ['AtlasRat_' LIST_METRICS{ii} '.nii.gz'];
+    save_nii_v2(Volume_metric, name_out, 'Template_metric_ref.nii.gz',16);
 end
 
-% cleaning of the folder
+% cleaning
 delete('Template_metric_ref.nii.gz'); 
 delete('Volume4D_full_ref.nii.gz');
 
-disp "DONE!"
-
-
+fprintf('\nDone!');
 

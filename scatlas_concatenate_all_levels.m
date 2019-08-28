@@ -17,13 +17,6 @@ fprintf('=========================\nCONCATENATE ACROSS LEVELS\n=================
 % go to data folder
 cd(fullfile(PATH_DATA, FOLDER_LEVELS, LIST_LEVELS{1}))
 
-% Read list of levels 'levels.txt'
-% fileID = fopen('/Volumes/projects/atlas_rat/levels.txt','r');
-% list_levels = textscan(fileID,'%s','Delimiter',',');
-
-% initialize output volume
-% cd(list_levels{1,1}{1,1});
-
 Volume4D=load_nii_data('Volume4D_sym_cleaned.nii.gz');
 mask_cord = zeros(size(Volume4D,1), size(Volume4D,2), length(LIST_LEVELS));
 mask_wm = zeros(size(Volume4D,1), size(Volume4D,2), length(LIST_LEVELS));
@@ -80,6 +73,9 @@ for ii=1:size(Volume4D_full,4)
     name_out = ['AtlasRat_' LIST_METRICS{ii} '.nii.gz'];
     save_nii_v2(Volume_metric, name_out, 'Template_metric_ref.nii.gz',16);
 end
+
+% Rename g-ratio file
+movefile('AtlasRat_GR_corrected.nii.gz', 'AtlasRat_GR.nii.gz');
 
 % cleaning
 delete('Template_metric_ref.nii.gz'); 

@@ -9,13 +9,11 @@ run scatlas_parameters.m
 
 fprintf('=========================\nCREATE SPINAL LEVELS\n=========================')
 
-cd(PATH_DATA);
-
 % go to data folder
 cd(fullfile(PATH_DATA, FOLDER_LEVELS))
 
 % Load spinal cord mask
-mask_cord = load_nii_data('AtlasRat_mask_cord.nii.gz');
+mask_cord = load_nii_data(fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_mask_cord.nii.gz'));
 
 % Initialize 3D empty object
 spinal_levels = zeros(size(mask_cord));
@@ -34,7 +32,7 @@ end
 
 % save final volume in nii
 fprintf('\nSave file...');
-save_nii_v2(spinal_levels,'AtlasRat_spinal_levels.nii.gz','AtlasRat_mask_cord.nii.gz', 4);
+save_nii_v2(spinal_levels, fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_spinal_levels.nii.gz'), fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_mask_cord.nii.gz'), 4);
 
 fprintf('\nDone!\n');
 

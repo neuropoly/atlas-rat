@@ -9,6 +9,8 @@ path_script = fileparts(mfilename('fullpath'));
 % load params
 run scatlas_parameters.m
 
+cd(fullfile(PATH_DATA))
+
 fprintf('=========================\nCREATE PACKAGE\n=========================\n')
 
 % copy package files (mostly documentation)

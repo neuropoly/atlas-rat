@@ -58,24 +58,25 @@ for level=1:length(LIST_LEVELS)
     
 end
 
-% save final volume in nii
+%% save final volume in nii
 fprintf('\nSave files...');
-ref_4d_full=zeros(size(Volume4D_full,1),size(Volume4D_full,2),size(Volume4D_full,3),size(Volume4D_full,4));
-save_nii(make_nii(ref_4d_full,[0.05 0.05 1]),'Volume4D_full_ref.nii.gz');
+% Make references for headers
+% ref_4d = zeros(size(Volume4D_full,1), size(Volume4D_full,2), size(Volume4D_full,3), size(Volume4D_full,4));
+% save_nii(make_nii(ref_4d,[0.05 0.05 1]),'tmp_ref_4d.nii.gz');
+ref_3d = zeros(size(Volume4D_full,1), size(Volume4D_full,2), size(Volume4D_full,3));
+save_nii(make_nii(ref_3d,[0.05 0.05 1]), 'tmp_ref_3d.nii.gz');
+
 % save_nii_v2(Volume4D_full, fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_4D_mean.nii.gz'),'Volume4D_full_ref.nii.gz',16);
 % save_nii_v2(Volume4D_full_std, fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_4D_std.nii.gz'), 'Volume4D_full_ref.nii.gz',16);
-save_nii_v2(mask_cord, fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_mask_cord.nii.gz'), 'Volume4D_full_ref.nii.gz',2);
-save_nii_v2(mask_wm, fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_mask_WM.nii.gz'), 'Volume4D_full_ref.nii.gz',2);
+save_nii_v2(mask_cord, fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_mask_cord.nii.gz'), 'tmp_ref_3d.nii.gz',2);
+save_nii_v2(mask_wm, fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_mask_WM.nii.gz'), 'tmp_ref_3d.nii.gz',2);
 
 % save individual volumes for each metric, across all levels
-ref_metric = zeros(size(Volume4D_full,1), size(Volume4D_full,2), size(Volume4D_full,3));
-save_nii(make_nii(ref_metric,[0.05 0.05 1]), 'Template_metric_ref.nii.gz');
-
 for ii=1:size(Volume4D_full,4)
     tmp = Volume4D_full(:,:,:,ii);
     Volume_metric = squeeze(tmp);  % make it 3D
     name_out = fullfile(PATH_DATA, FOLDER_ATLAS, ['AtlasRat_' LIST_METRICS{ii} '.nii.gz']);
-    save_nii_v2(Volume_metric, name_out, 'Template_metric_ref.nii.gz',16);
+    save_nii_v2(Volume_metric, name_out, 'tmp_ref_3d.nii.gz',16);
 end
 
 % Rename corrected files (for clarity)
@@ -83,8 +84,8 @@ movefile(fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_GR_corrected.nii.gz'), full
 movefile(fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_MVF_corrected.nii.gz'), fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_MVF.nii.gz'));
 
 % cleaning
-delete('Template_metric_ref.nii.gz'); 
-delete('Volume4D_full_ref.nii.gz');
+delete('tmp_ref_3d.nii.gz'); 
+% delete('Volume4D_full_ref.nii.gz');
 delete(fullfile(PATH_DATA, FOLDER_ATLAS, 'AtlasRat_AVF_corrected.nii.gz'));
 
 fprintf('\nDone!\n');

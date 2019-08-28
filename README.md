@@ -138,9 +138,14 @@ Outputs are: `Volume4D.nii.gz` (Mean across samples) and `Volume4D_std.nii.gz`(S
  by only keeping the spinal cord (i.e. white + gray matter) and removing
  the outer content. Outputs are: `Volume4D_sym_cleaned.nii.gz` and `Volume4D_sym_std_cleaned.nii.gz`
 
-- [scatlas_concatenate_all_levels.m](./scatlas_concatenate_all_levels.m): Concatenates the volumes (x, y, 1, metric) of each level to
- generate a 4D volume that includes all levels (x, y, z, metric). Also generates 3D
- volumes of each metric across all levels.
+- [scatlas_concatenate_all_levels.m](./scatlas_concatenate_all_levels.m):
+Generates 3D volumes of each metric across all levels, as well as cord and WM
+masks, and save them under a separate folder "AtlasRat/".
+
+- [scatlas_create_spinal_levels.m](./scatlas_create_spinal_levels.m): Create file with spinal levels.
+
+- [scatlas_create_package.m](./scatlas_create_package.m): Copy documentation into output atlas folder and zip the folder for convenient upload to web server (e.g. OSF).
+
 
 ### Register external atlas to the generated template
 

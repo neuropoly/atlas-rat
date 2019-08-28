@@ -1,0 +1,12 @@
+{
+  "Center": "PolytechniqueMontreal",
+  "To Cite": "TO COME",
+  "Project": "Rat",
+  "URL": "TODO",
+  "Modality": "Scanning Electron microscopy",
+  "Pathology": "healthy adult rat, N=5",
+  "PixelSize": "130nm",
+  "Staining": "Osmium",
+  "Structure": "Spinal cord",
+  "Region": ["Cervical", "Thoracic", "Lumbar", "Sacral"]
+}

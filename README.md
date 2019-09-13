@@ -210,7 +210,7 @@ generate_metrics_figures.m
 
 If you use this work in your research, please cite it as follows:
 
-TODO
+Ariane Saliani, Aldo Zaimi, Harris Nami, Tanguy Duval, Nikola Stikov, Julien Cohen-Adad, Construction of a rat spinal cord atlas of axon morphometry, NeuroImage, Volume 202, 2019, 116156, ISSN 1053-8119, https://doi.org/10.1016/j.neuroimage.2019.116156.
 
 Copyright (c) 2017 NeuroPoly (Polytechnique Montreal)
 

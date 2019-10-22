@@ -1,12 +1,14 @@
 %--------------------------------------------------------------------------
-% Symmetrization of digital atlas: From the Watson/Paxinos 
-% atlas available at https:https://github.com/neuropoly/histology/tree/
-% master/Pipeline/b_rat_Generate_Atlas/digital_watson_paxinos_atlas , 
-% create WM mask and tracts mask fron the left half of the atlas for each
-% level and then symmetrize the masks.
+% Symmetrization of digital atlas.
+% 
+% - Loop across each png file, which represents the axial view of the 
+%   Paxinos atlas. 
+% - Manually delineate the cord and the GM contours, as well as each tract
+%   both on the left and right.
+% - Symmetrize the generated masks.
 % 
 % Inputs:
-%           original atlas: level.png
+%           original atlas: <LEVEL>.png
 % 
 % Outputs:
 %           atlas WM mask: C1_WM_reg_reg.nii.gz

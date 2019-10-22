@@ -151,12 +151,9 @@ masks, and save them under a separate folder "AtlasRat/".
 
 - [scatlas_create_mirror_image.m](./scatlas_create_mirror_image.m): Digitalization and symmetrization of an existing atlas. Here, we used the rat spinal cord atlas from Watson et al.: https://www.sciencedirect.com/science/article/pii/B9780123742476500195?via%3Dihub
 
-- **scatlas_atlas_fix_tract_interface.m**: In the current implementation of `scatlas_create_mirror_image`, there are issues at tract interfaces, i.e.: the tracts are summed at the interface and/or there are null pixels. This creates subsequent issues in the pipeline. This script fixes that problem by applying a median filter, which effectively removes spurious pixels at interface.
+- [scatlas_atlas_fix_tract_interface.m](./scatlas_atlas_fix_tract_interface.m): In the current implementation of `scatlas_create_mirror_image.m`, there are issues at tract interfaces, i.e.: the tracts are summed at the interface and/or there are null pixels. This creates subsequent issues in the pipeline. This script fixes that problem by applying a median filter, which effectively removes spurious pixels at interface.
 
-- **Register atlas to template**: (TO COPY WHEN FINALIZED)
-~~~
-scatlas_register_atlas_to_template.m
-~~~
+- [scatlas_register_atlas_to_template.m](./scatlas_register_atlas_to_template.m): Register the digitized atlas to the created rat template.
 
 - **Metrics extraction**: Extract metrics within tracts defined by the atlas. 1) Creates an image showing a metric with an overlay of the atlas, where each tract is shown with a different color. 2) Extracts metrics. 3) Generate violin plot form and stats.
 

@@ -11,6 +11,7 @@
 %--------------------------------------------------------------------------                
 
 % TODO: change BSpline[3] to linear
+% TODO: output will be nx,ny,n_tract (instead of nx,ny)
 
 clear
 
@@ -46,12 +47,14 @@ for level=1:length(LIST_LEVELS)
 %     dest = load_nii_data('dest.nii.gz');
 
     % put WM mask in same header as template
+    img_atlas_resized = imresize(img_atlas,[151,151], 'bilinear');
+
     % TODO: check the thing below (why nearest??)    
-    if level==6 || level==8 || level==21 || level==22
-        img_atlas_resized = imresize(img_atlas,[151,151]);
-    else
-        img_atlas_resized = imresize(img_atlas,[151,151], 'nearest');
-    end 
+%     if level==6 || level==8 || level==21 || level==22
+%         img_atlas_resized = imresize(img_atlas,[151,151], 'bilinear');
+%     else
+%         img_atlas_resized = imresize(img_atlas,[151,151], 'nearest');
+%     end 
 
     filname_atlas_resized = [level_name,'_WM_reg_reg_resized.nii.gz'];
     save_nii_v2(make_nii(img_atlas_resized, [PIXEL_SIZE PIXEL_SIZE 1]), filname_atlas_resized, filename_atlas);

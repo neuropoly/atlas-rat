@@ -15,6 +15,9 @@
 
 clear
 
+SIZE_TEMPLATE = 151;
+OUTPUT_DTYPE = 4;  % dtype of output 4d file. 4: int16.
+
 % Params
 % none
 
@@ -27,7 +30,8 @@ fprintf('==========================\nREGISTER ATLAS TO TEMPLATE\n===============
 cd(fullfile(PATH_DATA, FOLDER_LEVELS))
 
 % loop over levels
-for level=1:length(LIST_LEVELS)
+n_levels = length(LIST_LEVELS);
+for level=1:n_levels
 
     cd(LIST_LEVELS{level});
 
@@ -47,13 +51,13 @@ for level=1:length(LIST_LEVELS)
 %     dest = load_nii_data('dest.nii.gz');
 
     % put WM mask in same header as template
-    img_atlas_resized = imresize(img_atlas,[151,151], 'bilinear');
+    img_atlas_resized = imresize(img_atlas,[SIZE_TEMPLATE,SIZE_TEMPLATE], 'bilinear');
 
     % TODO: check the thing below (why nearest??)    
 %     if level==6 || level==8 || level==21 || level==22
-%         img_atlas_resized = imresize(img_atlas,[151,151], 'bilinear');
+%         img_atlas_resized = imresize(img_atlas,[SIZE_TEMPLATE,SIZE_TEMPLATE], 'bilinear');
 %     else
-%         img_atlas_resized = imresize(img_atlas,[151,151], 'nearest');
+%         img_atlas_resized = imresize(img_atlas,[SIZE_TEMPLATE,SIZE_TEMPLATE], 'nearest');
 %     end 
 
     filname_atlas_resized = [level_name,'_WM_reg_reg_resized.nii.gz'];
@@ -142,22 +146,9 @@ for level=1:length(LIST_LEVELS)
 %               '--convergence 100x100x100x100 --shrink-factors 8x4x2x1 --smoothing-sigmas 0x0x0x0vox ',...
 %               '--output [warp_', [level_name,'.nii.gz'] ']',... 
 %               ' --interpolation BSpline[3] --verbose 1']); 
-    end 
-        
-        
-    filename_tracts = [level_name,'_reg_reg_tracts_fixed.nii.gz'];
-    img_tracts = load_nii_data(filename_tracts);
-
-    % put tracts in same header as template
-    img_tracts_resized = imresize(img_tracts, [151,151], 'nearest');
-    filename_tracts_resized = [level_name, '_reg_reg_tracts_fixed_resized.nii.gz'];
-    save_nii_v2(make_nii(img_tracts_resized, [PIXEL_SIZE PIXEL_SIZE 1]), filename_tracts_resized, filename_tracts);
-    filename_tracts = filename_tracts_resized;
-    filename_tracts_fixed = [level_name,'_reg_reg_tracts_resized_fixed.nii.gz'];
-    %unix(['fslmaths ' filename_tracts ' -kernel box 0.15x0.15 -fmedian ' filename_tracts_fixed]);
-
-    % Use sct_concat_transfo to create warp with the warp_0GenericAffine.met
-    % and the warp output from the ANTS registration
+    end
+    
+    % Concatenate affine and non-linear transformations
     sct_unix(['sct_concat_transfo -d ', filename_template, ' -w warp_0GenericAffine.mat warp_1Warp.nii.gz -o warp_atlas2template.nii.gz']);
 
     % Symmetrize the warping field
@@ -165,25 +156,76 @@ for level=1:length(LIST_LEVELS)
     warp2.img(:,:,:,:,1) = 1/2*(warp2.img(:,:,:,:,1)-warp2.img(end:-1:1,:,:,:,1));
     warp2.img(:,:,:,:,2) = 1/2*(warp2.img(:,:,:,:,2)+warp2.img(end:-1:1,:,:,:,2));
     save_untouch_nii(warp2,'warp_atlas2template_sym.nii.gz')
+        
+    %% Split each tract into a single file and apply the warping field to each tract     
     
-    % Apply warps onto the tracts mask
-    if level== 28 || level==29 || level==30 || level== 31
-        sct_unix(['sct_apply_transfo -i ', filename_tracts, ...
+    filename_tracts = [level_name,'_reg_reg_tracts_fixed.nii.gz'];
+    img_tracts = load_nii_data(filename_tracts);
+    % imagesc(img_tracts)  % for debugging
+
+    % loop across tract, separate each tract into individual file, then apply transformation.
+    n_tracts = max(max(img_tracts));
+    for i_tract=1:n_tracts
+        % extract tract into new image of same size
+        img_tract_i = zeros(size(img_tracts));
+        ind = find(img_tracts == i_tract);
+        img_tract_i(ind) = 1;
+        % put tracts in same header as template
+        img_tract_i_resized = imresize(img_tract_i, [SIZE_TEMPLATE,SIZE_TEMPLATE], 'bilinear');
+        filename_tract_resized = [level_name, '_reg_reg_tracts_fixed_resized_' num2str(i_tract) '.nii.gz'];
+        save_nii_v2(make_nii(img_tract_i_resized, [PIXEL_SIZE PIXEL_SIZE 1]), filename_tract_resized, filename_tracts);
+        % apply transformation
+        sct_unix(['sct_apply_transfo -i ', filename_tract_resized, ...
             ' -d ', filename_template, ...
-            ' -x nn', ...
-            ' -w warpinit_0GenericAffine.mat,warp_atlas2template_sym.nii.gz', ...
-            ' -o ', [level_name,'_reg_reg_tracts_fixed_reg.nii.gz']]);
-     else
-            sct_unix(['sct_apply_transfo -i ', filename_tracts, ...
-            ' -d ', filename_template, ...
-            ' -w warpinit_0GenericAffine.mat,warp_atlas2template_sym.nii.gz', ...
-            ' -o ', [level_name,'_reg_reg_tracts_fixed_reg.nii.gz']]);
-    end 
+            ' -x linear', ...
+            ' -w warp_atlas2template_sym.nii.gz', ...
+            ' -o ', [level_name,'_reg_reg_tracts_fixed_resized_' num2str(i_tract) '_reg.nii.gz']]);
+%         sct_unix(['sct_apply_transfo -i ', filename_tract_resized, ...
+%             ' -d ', filename_template, ...
+%             ' -x linear', ...
+%             ' -w warpinit_0GenericAffine.mat,warp_atlas2template_sym.nii.gz', ...
+%             ' -o ', [level_name,'_reg_reg_tracts_fixed_reg.nii.gz']]);
+        
+    end
+%         
+%         filename_tracts = filename_tracts_resized;
+%         filename_tracts_fixed = [level_name,'_reg_reg_tracts_resized_fixed.nii.gz'];
+    %unix(['fslmaths ' filename_tracts ' -kernel box 0.15x0.15 -fmedian ' filename_tracts_fixed]);
+
+%     % Apply warps onto the tracts mask
+%     if level== 28 || level==29 || level==30 || level== 31
+%         sct_unix(['sct_apply_transfo -i ', filename_tracts, ...
+%             ' -d ', filename_template, ...
+%             ' -x nn', ...
+%             ' -w warpinit_0GenericAffine.mat,warp_atlas2template_sym.nii.gz', ...
+%             ' -o ', [level_name,'_reg_reg_tracts_fixed_reg.nii.gz']]);
+%      else
+%             sct_unix(['sct_apply_transfo -i ', filename_tracts, ...
+%             ' -d ', filename_template, ...
+%             ' -w warpinit_0GenericAffine.mat,warp_atlas2template_sym.nii.gz', ...
+%             ' -o ', [level_name,'_reg_reg_tracts_fixed_reg.nii.gz']]);
+%     end 
     
-    % Generate QC
-    scatlas_qc_registration({[level_name,'_reg_reg_tracts_fixed_reg.nii.gz'], filename_template}, ['../../qc_atlas_', LIST_LEVELS{level}, '.gif']);
+    
+    % Generate QC: gif anim to compare registered WM mask to template
+    scatlas_qc_registration({[level_name,'_WM_reg_reg_reg.nii.gz'], filename_template}, ['../../qc_atlas_', LIST_LEVELS{level}, '.gif']);
     cd ..
-    
 end
 
+%% Concatenate each registered tracts into a 4d volume: (x,y,z,tract)
+% initialize array
+img4d = zeros([SIZE_TEMPLATE, SIZE_TEMPLATE, n_levels, n_tracts]);
+for i_level=1:n_levels
+    for i_tract=1:n_tracts
+        % open image
+        img = load_nii_data([level_name filesep level_name '_reg_reg_tracts_fixed_resized_' num2str(i_tract) '_reg.nii.gz']);
+        % populate array
+        img4d(:, :, i_level, i_tract) = img;
+    end
+end
+% write nifti file
+nii = make_nii(img4d, [PIXEL_SIZE PIXEL_SIZE 1]);
+nii.hdr.dime.datatype = OUTPUT_DTYPE;
+nii.hdr.dime.bitpix = OUTPUT_DTYPE;
+save_nii_v2(nii, 'AtlasRat_Paxinos.nii.gz', 4);
 disp "DONE!"

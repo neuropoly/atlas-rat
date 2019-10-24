@@ -1,7 +1,8 @@
 % generate QC to check quality of atlas registration
-% list_files: list of cells
+% the input is a list of 2D nifti files, and the output is a gif anim.
 
 function scatlas_qc_registration(list_files, fileout)
+    % list_files: list of cells. Each cell is a path to a nifti file.
     % loop across image and write to GIF
     for file=1:length(list_files)
         % get image matrix

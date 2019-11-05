@@ -137,5 +137,5 @@ end
 nii = make_nii(img4d, [PIXEL_SIZE PIXEL_SIZE 1]);
 nii.hdr.dime.datatype = OUTPUT_DTYPE;
 nii.hdr.dime.bitpix = OUTPUT_DTYPE;
-save_nii_v2(nii, 'AtlasRat_Paxinos_soft.nii.gz', OUTPUT_DTYPE);
+save_nii_v2(nii, 'AtlasRat_Paxinos.nii.gz', OUTPUT_DTYPE);
 disp "DONE!"

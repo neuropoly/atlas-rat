@@ -10,7 +10,7 @@
 % external atlas mask to the 2D generated mask of the corresponding level.
 %--------------------------------------------------------------------------                
 
-% TODO: check levels 7 and 27 (counting first level as 0).
+% TODO: check levels 8 and 27 (counting first level as 0).
 % TODO: fix inconsistencies in tract numbering for levels 0, 1, 2.
 clear
 
@@ -42,7 +42,11 @@ for level=1:n_levels
     img_template = load_nii_data(filename_template);
 
     % put WM mask in same header as template
-    img_atlas_resized = imresize(img_atlas,[SIZE_TEMPLATE,SIZE_TEMPLATE], 'bilinear');
+    if level==8 || level==27
+        img_atlas_resized = imresize(img_atlas,[151,151]);
+    else
+        img_atlas_resized = imresize(img_atlas,[SIZE_TEMPLATE,SIZE_TEMPLATE], 'bilinear');
+    end 
     filname_atlas_resized = [level_name,'_WM_reg_reg_resized.nii.gz'];
     save_nii_v2(make_nii(img_atlas_resized, [PIXEL_SIZE PIXEL_SIZE 1]), filname_atlas_resized, filename_atlas);
     filename_atlas = filname_atlas_resized;

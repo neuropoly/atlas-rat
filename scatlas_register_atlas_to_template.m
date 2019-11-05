@@ -15,7 +15,7 @@
 clear
 
 SIZE_TEMPLATE = 151;
-OUTPUT_DTYPE = 4;  % dtype of output 4d file. 4: int16.
+OUTPUT_DTYPE = 16;  % dtype of output 4d file. 4: int16, 16: float-32 (see: https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/8797/versions/28/previews/make_nii.m/index.html).
 
 % load params
 run scatlas_parameters.m
@@ -137,5 +137,5 @@ end
 nii = make_nii(img4d, [PIXEL_SIZE PIXEL_SIZE 1]);
 nii.hdr.dime.datatype = OUTPUT_DTYPE;
 nii.hdr.dime.bitpix = OUTPUT_DTYPE;
-save_nii_v2(nii, 'AtlasRat_Paxinos.nii.gz', 4);
+save_nii_v2(nii, 'AtlasRat_Paxinos_soft.nii.gz', OUTPUT_DTYPE);
 disp "DONE!"

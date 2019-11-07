@@ -17,7 +17,7 @@
 % neighbor LSp (as is the case in other levels). The original tract file
 % with all the labels is called: XX_reg_reg_tracts_fixed_AdditionalTracts.nii.gz
 % 
-% Tested with ANTs Version: 2.1.0.post735-gae5a6
+% Tested with ANTs Version: 2.1.0.post735-gae5a6 on OSX Mojave
 %--------------------------------------------------------------------------                
 
 % TODO: check levels 8 and 27 (counting first level as 0).
@@ -65,7 +65,7 @@ for level=1:n_levels
            ' --metric MeanSquares[', filename_template, ', ', filename_atlas, ', 1, 4] ',...
            '--convergence 100x100x100x100 --shrink-factors 8x4x2x1 --smoothing-sigmas 0x0x0x0vox ',...
            '--output [warp_, ', [level_name,'_WM_reg_reg_reg.nii.gz'] ']' ,...
-           ' --interpolation BSpline[3] --verbose 1']); 
+           ' --interpolation Linear --verbose 1']); 
     
     % Concatenate affine and non-linear transformations
     sct_unix(['sct_concat_transfo -d ', filename_template, ' -w warp_0GenericAffine.mat warp_1Warp.nii.gz -o warp_atlas2template.nii.gz']);

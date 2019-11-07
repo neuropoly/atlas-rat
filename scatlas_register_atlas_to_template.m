@@ -8,6 +8,14 @@
 % 
 % This script works by looping across levels and registering the 2D
 % external atlas mask to the 2D generated mask of the corresponding level.
+% 
+% The input of this function are the files XX_reg_reg_tracts_fixed.nii.gz.
+% By default, they are located under: /Volumes/projects/atlas_rat/Generated_Atlas_final_results/data/all_levels/XX 
+% Note: on the original Paxinos atlas, C1, C2 and C3 levels have an
+% additional tract (LatC). To overcome the problem of having a variable
+% number of tracts across levels, we decided to fuse this tract with its
+% neighbor LSp (as is the case in other levels). The original tract file
+% with all the labels is called: XX_reg_reg_tracts_fixed_AdditionalTracts.nii.gz
 %--------------------------------------------------------------------------                
 
 % TODO: check levels 8 and 27 (counting first level as 0).

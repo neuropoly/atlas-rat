@@ -20,7 +20,7 @@ The 4th dimension contains the different metrics, in this order:
 
 ## Dataset available
 
-The dataset that this pipeline is based on is available at: https://osf.io/4b69v/. It contains the following data:
+The dataset that this pipeline is based on is available at: https://osf.io/g7kx8/. It contains the following data:
 
 - Rats perfusion + histology
 - Acquisition with EM

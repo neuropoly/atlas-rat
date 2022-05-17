@@ -167,26 +167,6 @@ Before running the script, add to path the violin function that can be downloade
 
 ADD PIPELINE OVERVIEW FIGURE HERE
 
-
-### K-means clustering
-
-WARNING: THIS STEP IS UNDER DEVELOPMENT
-
-Before launching the batch, the user can specify the number of clusters to use. For instance, to compute the k-means clustering for a number of clusters between 4 and 8, the following variables can be assigned:
-
-```
-min_nbr_clusters=4
-max_nbr_clusters=8
-```
-The default values are `min_nbr_clusters=2`and `max_nbr_clusters=10`.
-
-You can then launch the k-means batch:
-
-```
-step4_kmeans.m
-```
-Result figures for `k=min_nbr_clusters:max_nbr_clusters`, along with tables of means and stds of each cluster,are saved in the output folder ('Stats_X.mat', where X is the number of clusters).
-
 ### Other tools
 
 To generate figures with colormaps for each metric from a **'Volume4D.nii.gz'** template, you can use the following script:

@@ -155,6 +155,8 @@ masks, and save them under a separate folder "AtlasRat/".
 
 - [scatlas_register_atlas_to_template.m](./scatlas_register_atlas_to_template.m): Register the digitized atlas to the created rat template.
 
+The digitized and registered Watson atlas is available [here](https://github.com/neuropoly/atlas-rat/releases/download/v1.0/digital_Paxinos_after_symmetrization.zip). 
+
 - **Metrics extraction**: Extract metrics within tracts defined by the atlas. 1) Creates an image showing a metric with an overlay of the atlas, where each tract is shown with a different color. 2) Extracts metrics. 3) Generate violin plot form and stats.
 
 ~~~
